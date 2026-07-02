@@ -28,11 +28,17 @@ export class User {
   @Column()
   password: string;
 
-  @Field(() => [Post], { description: 'Posts creados por el usuario', nullable: true })
+  @Field(() => [Post], {
+    description: 'Posts creados por el usuario',
+    nullable: true,
+  })
   @OneToMany(() => Post, (post) => post.author)
   posts: Post[];
 
-  @Field(() => [Comment], { description: 'Comentarios del usuario', nullable: true })
+  @Field(() => [Comment], {
+    description: 'Comentarios del usuario',
+    nullable: true,
+  })
   @OneToMany(() => Comment, (comment) => comment.author)
   comments: Comment[];
 

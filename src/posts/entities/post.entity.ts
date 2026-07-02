@@ -32,7 +32,10 @@ export class Post {
   @Column()
   authorId: number;
 
-  @Field(() => [Comment], { description: 'Comentarios del post', nullable: true })
+  @Field(() => [Comment], {
+    description: 'Comentarios del post',
+    nullable: true,
+  })
   @OneToMany(() => Comment, (comment) => comment.post)
   comments: Comment[];
 

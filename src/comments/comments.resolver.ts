@@ -37,12 +37,15 @@ export class CommentsResolver {
     description: 'Obtener todos los comentarios de un post específico',
   })
   async findByPost(
-    @Args('postId', { type: () => Int, description: 'ID del post' }) postId: number,
+    @Args('postId', { type: () => Int, description: 'ID del post' })
+    postId: number,
   ): Promise<Comment[]> {
     return this.commentsService.findByPostId(postId);
   }
 
-  @Mutation(() => Comment, { description: 'Crear un nuevo comentario en un post' })
+  @Mutation(() => Comment, {
+    description: 'Crear un nuevo comentario en un post',
+  })
   @UseGuards(GqlAuthGuard)
   async createComment(
     @Args('createCommentInput') createCommentInput: CreateCommentInput,
@@ -61,14 +64,18 @@ export class CommentsResolver {
 
   @Subscription(() => Comment, {
     description: 'Suscribirse a nuevos comentarios en un post específico',
-    filter: (payload, variables) =>
-      payload.commentAdded.postId === variables.postId,
-    resolve: (payload) => payload.commentAdded,
+    filter: (
+      payload: { commentAdded: Comment },
+      variables: { postId: number },
+    ) => payload.commentAdded.postId === variables.postId,
+    resolve: (payload: { commentAdded: Comment }) => payload.commentAdded,
   })
+  /* eslint-disable @typescript-eslint/no-unused-vars */
   commentAdded(
     @Args('postId', { type: () => Int, description: 'ID del post a escuchar' })
     _postId: number,
   ) {
+    /* eslint-enable @typescript-eslint/no-unused-vars */
     return this.pubSub.asyncIterableIterator(COMMENT_ADDED);
   }
 

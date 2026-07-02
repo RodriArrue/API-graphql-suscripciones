@@ -25,20 +25,29 @@ export class PostsResolver {
     private readonly usersLoader: UsersLoader,
   ) {}
 
-  @Query(() => [Post], { name: 'posts', description: 'Listar posts con paginación' })
+  @Query(() => [Post], {
+    name: 'posts',
+    description: 'Listar posts con paginación',
+  })
   async findAll(
-    @Args('limit', { type: () => Int, defaultValue: 10, description: 'Cantidad de posts a retornar' })
+    @Args('limit', {
+      type: () => Int,
+      defaultValue: 10,
+      description: 'Cantidad de posts a retornar',
+    })
     limit: number,
-    @Args('offset', { type: () => Int, defaultValue: 0, description: 'Cantidad de posts a saltar' })
+    @Args('offset', {
+      type: () => Int,
+      defaultValue: 0,
+      description: 'Cantidad de posts a saltar',
+    })
     offset: number,
   ): Promise<Post[]> {
     return this.postsService.findAll(limit, offset);
   }
 
   @Query(() => Post, { name: 'post', description: 'Obtener un post por ID' })
-  async findOne(
-    @Args('id', { type: () => ID }) id: number,
-  ): Promise<Post> {
+  async findOne(@Args('id', { type: () => ID }) id: number): Promise<Post> {
     return this.postsService.findOneById(id);
   }
 
@@ -70,7 +79,9 @@ export class PostsResolver {
     return this.postsService.remove(id, user.userId);
   }
 
-  @ResolveField('author', () => User, { description: 'Autor del post (cargado con DataLoader)' })
+  @ResolveField('author', () => User, {
+    description: 'Autor del post (cargado con DataLoader)',
+  })
   async getAuthor(@Parent() post: Post): Promise<User> {
     return this.usersLoader.load(post.authorId);
   }

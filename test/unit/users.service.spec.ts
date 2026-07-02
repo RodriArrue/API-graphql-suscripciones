@@ -49,7 +49,9 @@ describe('UsersService', () => {
       const result = await usersService.findOneById(1);
 
       expect(result).toEqual(mockUser);
-      expect(usersRepository.findOne).toHaveBeenCalledWith({ where: { id: 1 } });
+      expect(usersRepository.findOne).toHaveBeenCalledWith({
+        where: { id: 1 },
+      });
     });
 
     it('debe retornar null si el usuario no existe', async () => {
@@ -92,7 +94,11 @@ describe('UsersService', () => {
 
   describe('create', () => {
     it('debe crear y guardar un usuario', async () => {
-      const userData = { email: 'new@test.com', username: 'newuser', password: 'hashed' };
+      const userData = {
+        email: 'new@test.com',
+        username: 'newuser',
+        password: 'hashed',
+      };
       const mockUser = { id: 1, ...userData };
 
       usersRepository.create!.mockReturnValue(mockUser);

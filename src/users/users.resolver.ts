@@ -8,13 +8,20 @@ import { GqlAuthGuard } from '../auth/guards/gql-auth.guard';
 export class UsersResolver {
   constructor(private readonly usersService: UsersService) {}
 
-  @Query(() => [User], { name: 'users', description: 'Listar todos los usuarios' })
+  @Query(() => [User], {
+    name: 'users',
+    description: 'Listar todos los usuarios',
+  })
   @UseGuards(GqlAuthGuard)
   async findAll(): Promise<User[]> {
     return this.usersService.findAll();
   }
 
-  @Query(() => User, { name: 'user', description: 'Buscar un usuario por ID', nullable: true })
+  @Query(() => User, {
+    name: 'user',
+    description: 'Buscar un usuario por ID',
+    nullable: true,
+  })
   @UseGuards(GqlAuthGuard)
   async findOne(
     @Args('id', { type: () => ID }) id: number,

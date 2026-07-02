@@ -32,7 +32,10 @@ export class PostsService {
     return post;
   }
 
-  async create(createPostInput: CreatePostInput, userId: number): Promise<Post> {
+  async create(
+    createPostInput: CreatePostInput,
+    userId: number,
+  ): Promise<Post> {
     const post = this.postsRepository.create({
       ...createPostInput,
       authorId: userId,
@@ -48,7 +51,9 @@ export class PostsService {
     const post = await this.findOneById(id);
 
     if (post.authorId !== userId) {
-      throw new UnauthorizedException('No tenés permisos para editar este post');
+      throw new UnauthorizedException(
+        'No tenés permisos para editar este post',
+      );
     }
 
     Object.assign(post, updatePostInput);

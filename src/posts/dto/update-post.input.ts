@@ -10,7 +10,10 @@ export class UpdatePostInput {
   @MaxLength(200, { message: 'El título no puede tener más de 200 caracteres' })
   title?: string;
 
-  @Field(() => String, { description: 'Nuevo contenido del post', nullable: true })
+  @Field(() => String, {
+    description: 'Nuevo contenido del post',
+    nullable: true,
+  })
   @IsOptional()
   @IsString()
   @MinLength(10, { message: 'El contenido debe tener al menos 10 caracteres' })

@@ -5,8 +5,8 @@ import { ExecutionContext } from '@nestjs/common';
 
 @Injectable()
 export class GqlAuthGuard extends AuthGuard('jwt') {
-  getRequest(context: ExecutionContext) {
+  getRequest(context: ExecutionContext): Request {
     const ctx = GqlExecutionContext.create(context);
-    return ctx.getContext().req;
+    return ctx.getContext<{ req: Request }>().req;
   }
 }

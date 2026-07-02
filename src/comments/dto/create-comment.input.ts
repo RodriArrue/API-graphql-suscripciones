@@ -9,7 +9,9 @@ export class CreateCommentInput {
   @MinLength(1, { message: 'El comentario no puede estar vacío' })
   content: string;
 
-  @Field(() => Int, { description: 'ID del post al que pertenece el comentario' })
+  @Field(() => Int, {
+    description: 'ID del post al que pertenece el comentario',
+  })
   @IsNumber({}, { message: 'El postId debe ser un número' })
   postId: number;
 }

@@ -55,9 +55,15 @@ describe('AuthService', () => {
         }),
       );
       // Verificar que el password fue hasheado (no es el original)
-      const callArg = usersService.create!.mock.calls[0][0];
+      // eslint-disable-next-line @typescript-eslint/no-unsafe-member-access
+      const callArg = usersService.create!.mock.calls[0]![0] as {
+        password: string;
+      };
       expect(callArg.password).not.toBe(registerInput.password);
-      expect(jwtService.sign).toHaveBeenCalledWith({ sub: 1, email: 'test@test.com' });
+      expect(jwtService.sign).toHaveBeenCalledWith({
+        sub: 1,
+        email: 'test@test.com',
+      });
     });
   });
 
@@ -76,14 +82,20 @@ describe('AuthService', () => {
       });
 
       expect(result).toEqual({ accessToken: 'mock-jwt-token' });
-      expect(jwtService.sign).toHaveBeenCalledWith({ sub: 1, email: 'test@test.com' });
+      expect(jwtService.sign).toHaveBeenCalledWith({
+        sub: 1,
+        email: 'test@test.com',
+      });
     });
 
     it('debe lanzar UnauthorizedException si el usuario no existe', async () => {
       usersService.findOneByEmail!.mockResolvedValue(null);
 
       await expect(
-        authService.login({ email: 'noexiste@test.com', password: 'password123' }),
+        authService.login({
+          email: 'noexiste@test.com',
+          password: 'password123',
+        }),
       ).rejects.toThrow(UnauthorizedException);
     });
 
@@ -96,7 +108,10 @@ describe('AuthService', () => {
       });
 
       await expect(
-        authService.login({ email: 'test@test.com', password: 'wrongpassword' }),
+        authService.login({
+          email: 'test@test.com',
+          password: 'wrongpassword',
+        }),
       ).rejects.toThrow(UnauthorizedException);
     });
   });

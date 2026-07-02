@@ -8,13 +8,21 @@ import { RegisterInput } from './dto/register.input';
 export class AuthResolver {
   constructor(private readonly authService: AuthService) {}
 
-  @Mutation(() => AuthResponse, { description: 'Iniciar sesión y obtener token JWT' })
-  async login(@Args('loginInput') loginInput: LoginInput): Promise<AuthResponse> {
+  @Mutation(() => AuthResponse, {
+    description: 'Iniciar sesión y obtener token JWT',
+  })
+  async login(
+    @Args('loginInput') loginInput: LoginInput,
+  ): Promise<AuthResponse> {
     return this.authService.login(loginInput);
   }
 
-  @Mutation(() => AuthResponse, { description: 'Registrar un nuevo usuario y obtener token JWT' })
-  async register(@Args('registerInput') registerInput: RegisterInput): Promise<AuthResponse> {
+  @Mutation(() => AuthResponse, {
+    description: 'Registrar un nuevo usuario y obtener token JWT',
+  })
+  async register(
+    @Args('registerInput') registerInput: RegisterInput,
+  ): Promise<AuthResponse> {
     return this.authService.register(registerInput);
   }
 }

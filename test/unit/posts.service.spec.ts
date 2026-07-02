@@ -80,7 +80,10 @@ describe('PostsService', () => {
 
   describe('create', () => {
     it('debe crear un post con el authorId del usuario', async () => {
-      const createInput = { title: 'Nuevo post', content: 'Contenido del post nuevo' };
+      const createInput = {
+        title: 'Nuevo post',
+        content: 'Contenido del post nuevo',
+      };
       const mockPost = { id: 1, ...createInput, authorId: 5 };
 
       postsRepository.create!.mockReturnValue(mockPost);
@@ -98,11 +101,19 @@ describe('PostsService', () => {
 
   describe('update', () => {
     it('debe actualizar un post si el usuario es el autor', async () => {
-      const existingPost = { id: 1, title: 'Original', content: 'Contenido', authorId: 5 };
+      const existingPost = {
+        id: 1,
+        title: 'Original',
+        content: 'Contenido',
+        authorId: 5,
+      };
       const updateInput = { title: 'Actualizado' };
 
       postsRepository.findOne!.mockResolvedValue({ ...existingPost });
-      postsRepository.save!.mockResolvedValue({ ...existingPost, ...updateInput });
+      postsRepository.save!.mockResolvedValue({
+        ...existingPost,
+        ...updateInput,
+      });
 
       const result = await postsService.update(1, updateInput, 5);
 
